@@ -1,0 +1,63 @@
+<article>
+  <app-person-page-header header="Person details"></app-person-page-header>
+
+  <app-card>
+    <ng-container *ngIf="person$ | async as person; else errorOrLoading">
+      <section *ngIf="person !== 'empty'; else noData">
+        <header>
+          <app-person-avatar
+            [width]="64"
+            [height]="64"
+            [url]="person.avatarUrl"
+          ></app-person-avatar>
+          <h2 class="person-name">{{ person.name }}</h2>
+          <div class="person-tags">
+            <app-person-tag
+              *ngFor="let tag of person.tags"
+              [name]="tag"
+            ></app-person-tag>
+          </div>
+        </header>
+
+        <dl>
+          <div class="person-info-row">
+            <dt>Company</dt>
+            <dd>{{ person.company }}</dd>
+          </div>
+          <div class="person-info-row">
+            <dt>E-mail</dt>
+            <dd>{{ person.email }}</dd>
+          </div>
+          <div *ngIf="person.phone" class="person-info-row">
+            <dt>Phone</dt>
+            <dd>{{ person.phone }}</dd>
+          </div>
+          <div class="person-info-row">
+            <dt>Address</dt>
+            <dd>{{ person.address }}</dd>
+          </div>
+          <div *ngIf="person.about" class="person-info-row">
+            <dt>About</dt>
+            <dd>{{ person.about }}</dd>
+          </div>
+          <div class="person-info-row">
+            <dt>Created at</dt>
+            <dd>{{ person.createdAt | date: 'dd MMM yyyy' }}</dd>
+          </div>
+        </dl>
+      </section>
+      <ng-template #noData>
+        <p class="fetch-notice">User with a provided id does not exist.</p>
+      </ng-template>
+    </ng-container>
+    <ng-template #errorOrLoading>
+      <p class="fetch-notice">
+        <ng-container *ngIf="error; else loading">
+          There was an error while fetching the select user. Please try again
+          later.
+        </ng-container>
+        <ng-template #loading>Loading...</ng-template>
+      </p>
+    </ng-template>
+  </app-card>
+</article>

@@ -1,0 +1,82 @@
+nav {
+  display: inline-flex;
+}
+
+nav > .pagination-segment {
+  border: 1px solid var(--gray-300);
+}
+
+nav > .pagination-segment + .pagination-segment {
+  margin-inline-start: -1px;
+}
+
+nav > .pagination-segment > :is(a, span) {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding-block: var(--space-2);
+  padding-inline: var(--space-4);
+  transition-property: background-color;
+  transition-timing-function: var(--transition-fn);
+  transition-duration: var(--transition-dur);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--gray-500);
+  line-height: var(--lh-sm);
+}
+
+nav > .pagination-segment > :is(a, span):focus {
+  z-index: 2;
+}
+
+nav > .pagination-segment > a:hover {
+  background-color: var(--gray-50);
+}
+
+nav > .pagination-segment.icon-segment > a {
+  padding-inline: var(--space-2);
+}
+
+nav > .pagination-segment.current {
+  border: 1px solid var(--primary-500);
+  z-index: 1;
+}
+
+nav > .pagination-segment.current > :is(a, span) {
+  background-color: var(--primary-50);
+  color: var(--primary-500);
+}
+
+nav > .pagination-segment.current > a:hover {
+  background-color: var(--primary-100);
+}
+
+nav > :first-child {
+  border-start-start-radius: 6px;
+  border-end-start-radius: 6px;
+}
+
+nav > :first-child > a {
+  border-start-start-radius: 6px;
+  border-end-start-radius: 6px;
+}
+
+nav > :last-child {
+  border-start-end-radius: 6px;
+  border-end-end-radius: 6px;
+}
+
+nav > :last-child > a {
+  border-start-end-radius: 6px;
+  border-end-end-radius: 6px;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+svg {
+  block-size: var(--text-lg);
+  inline-size: var(--text-lg);
+}

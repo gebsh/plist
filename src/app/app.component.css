@@ -1,0 +1,14 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-block-size: 100vh;
+  min-block-size: -webkit-fill-available;
+}
+
+main {
+  flex-grow: 1;
+  inline-size: 100%;
+  max-inline-size: 1280px;
+  padding: var(--space-6) var(--space-8);
+}

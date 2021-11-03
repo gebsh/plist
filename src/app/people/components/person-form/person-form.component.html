@@ -1,0 +1,204 @@
+<form
+  [attr.id]="formId !== undefined ? formId : null"
+  [formGroup]="personForm"
+  (ngSubmit)="handleSubmit()"
+>
+  <div class="form-field person-name">
+    <label for="person-name">Name *</label>
+    <input
+      id="person-name"
+      type="text"
+      autocomplete="name"
+      placeholder="Enter your full name"
+      formControlName="name"
+      [ngClass]="{ error: name.invalid && (name.dirty || name.touched) }"
+    />
+    <p class="form-field-error">
+      <ng-container *ngIf="name.invalid && (name.dirty || name.touched)">
+        <ng-container *ngIf="name.errors?.required">
+          Name is required.
+        </ng-container>
+      </ng-container>
+    </p>
+  </div>
+
+  <app-person-avatar
+    [width]="32"
+    [height]="32"
+    [url]="avatarUrl.value"
+  ></app-person-avatar>
+
+  <div class="form-field person-company">
+    <label for="person-company">Company *</label>
+    <input
+      id="person-company"
+      type="text"
+      autocomplete="organization"
+      placeholder="Enter the name of your company"
+      formControlName="company"
+      [ngClass]="{
+        error: company.invalid && (company.dirty || company.touched)
+      }"
+    />
+    <p class="form-field-error">
+      <ng-container
+        *ngIf="company.invalid && (company.dirty || company.touched)"
+      >
+        <ng-container *ngIf="company.errors?.required">
+          Company is required.
+        </ng-container>
+      </ng-container>
+    </p>
+  </div>
+
+  <!-- Usually this is done with a file input but let's stick to a simpler -->
+  <!-- text input here. -->
+  <div class="form-field person-avatar">
+    <label for="person-avatar">Avatar</label>
+    <input
+      id="person-avatar"
+      type="text"
+      inputmode="url"
+      placeholder="http://placehold.it/32x32"
+      formControlName="avatarUrl"
+    />
+    <p class="form-field-error"></p>
+  </div>
+
+  <div class="form-field person-email">
+    <label for="person-email">Email *</label>
+    <input
+      id="person-email"
+      type="text"
+      inputmode="email"
+      autocomplete="email"
+      placeholder="you@example.com"
+      formControlName="email"
+      [ngClass]="{
+        error: email.invalid && (email.dirty || email.touched)
+      }"
+    />
+    <p class="form-field-error">
+      <ng-container *ngIf="email.invalid && (email.dirty || email.touched)">
+        <ng-container *ngIf="email.errors?.required">
+          E-mail is required.
+        </ng-container>
+        <ng-container *ngIf="email.errors?.email">
+          Please enter a valid e-mail.
+        </ng-container>
+      </ng-container>
+    </p>
+  </div>
+
+  <div class="form-field person-phone">
+    <label for="person-phone">Phone number</label>
+    <input
+      id="person-phone"
+      type="text"
+      inputmode="tel"
+      autocomplete="tel"
+      placeholder="(000) 000-0000"
+      formControlName="phone"
+    />
+    <p class="form-field-error"></p>
+  </div>
+
+  <div class="form-field person-address">
+    <label for="person-address">Street address *</label>
+    <input
+      id="person-address"
+      type="text"
+      autocomplete="street-address"
+      placeholder="Enter your full street address"
+      formControlName="address"
+      [ngClass]="{
+        error: address.invalid && (address.dirty || address.touched)
+      }"
+    />
+    <p class="form-field-error">
+      <ng-container
+        *ngIf="address.invalid && (address.dirty || address.touched)"
+      >
+        <ng-container *ngIf="address.errors?.required">
+          Street address is required.
+        </ng-container>
+      </ng-container>
+    </p>
+  </div>
+
+  <div class="form-field person-about">
+    <label for="person-about">About</label>
+    <textarea
+      id="person-about"
+      type="text"
+      placeholder="Tell us something about yourself"
+      rows="6"
+      autocomplete="off"
+      formControlName="about"
+    ></textarea>
+    <p class="form-field-error"></p>
+  </div>
+
+  <!-- This should probably be done using a custom ControlValueAccessor or a -->
+  <!-- much more complex component. Here's a simple (but, unfortunately, also -->
+  <!-- not pleasant to eye) implementation. -->
+  <div class="person-tags-header">
+    <label>Tags</label>
+    <button class="person-add-tag" type="button" (click)="addTag()">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+        />
+      </svg>
+    </button>
+  </div>
+
+  <div
+    *ngFor="let tag of tags.controls; index as i"
+    class="form-field person-tag"
+    formArrayName="tags"
+  >
+    <div class="person-tag-header">
+      <label for="person-tag-{{ i + 1 }}">Tag {{ i + 1 }} name</label>
+      <button class="person-remove-tag" type="button" (click)="removeTag(i)">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"
+          />
+        </svg>
+      </button>
+    </div>
+    <input
+      id="person-tag-{{ i + 1 }}"
+      type="text"
+      placeholder="Enter a name of this tag"
+      [formControlName]="i"
+      [ngClass]="{
+        error: tag.invalid && (tag.dirty || tag.touched)
+      }"
+    />
+    <p class="form-field-error">
+      <ng-container *ngIf="tag.invalid && (tag.dirty || tag.touched)">
+        <ng-container *ngIf="tag.errors?.required">
+          Tag name is required.
+        </ng-container>
+      </ng-container>
+    </p>
+  </div>
+</form>

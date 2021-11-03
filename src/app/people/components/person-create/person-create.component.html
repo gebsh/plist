@@ -1,0 +1,21 @@
+<article>
+  <app-person-page-header header="Create a person"></app-person-page-header>
+
+  <app-card>
+    <app-person-form
+      formId="person-form"
+      (submitPerson)="createPerson($event)"
+    ></app-person-form>
+    <div class="form-actions">
+      <p class="fetch-notice">
+        <ng-container *ngIf="error">
+          There was an error while saving the form. Please try again later.
+        </ng-container>
+      </p>
+      <button form="person-form" type="submit" [disabled]="submitting">
+        <ng-container *ngIf="submitting; else save">Creating...</ng-container>
+        <ng-template #save>Create</ng-template>
+      </button>
+    </div>
+  </app-card>
+</article>

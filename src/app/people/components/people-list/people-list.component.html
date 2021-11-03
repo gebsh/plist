@@ -1,0 +1,170 @@
+<article>
+  <header>
+    <h1>Browse people</h1>
+    <div class="people-action-bar">
+      <label for="people-search">Search people</label>
+      <div class="people-action-bar-widgets">
+        <input
+          id="people-search"
+          type="text"
+          inputmode="search"
+          [formControl]="filterControl"
+        />
+        <button type="button" (click)="createPerson()">Add person</button>
+      </div>
+    </div>
+  </header>
+
+  <app-card>
+    <table>
+      <thead>
+        <tr>
+          <th (keydown.enter)="sort('name')" (click)="sort('name')">
+            <div class="column-header">
+              <span tabindex="0">Name</span>
+              <app-people-list-sort-arrow
+                [order]="nameSortOrder"
+              ></app-people-list-sort-arrow>
+            </div>
+          </th>
+          <th (keydown.enter)="sort('company')" (click)="sort('company')">
+            <div class="column-header">
+              <span tabindex="0">Company</span>
+              <app-people-list-sort-arrow
+                [order]="companySortOrder"
+              ></app-people-list-sort-arrow>
+            </div>
+          </th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <ng-container *ngIf="data$ | async as data; else errorOrLoading">
+        <ng-container *ngIf="data.people.length > 0; else noData">
+          <tbody>
+            <tr
+              *ngFor="let person of data.people; trackBy: personTrackBy"
+              class="person-row"
+              tabindex="0"
+              (keydown.enter)="openPersonDetails(person.id)"
+              (click)="openPersonDetails(person.id)"
+            >
+              <td>
+                <div class="person-info">
+                  <app-person-avatar
+                    [width]="32"
+                    [height]="32"
+                    [url]="person.avatarUrl"
+                  ></app-person-avatar>
+                  <span class="person-name">{{ person.name }}</span>
+                </div>
+              </td>
+              <td>{{ person.company }}</td>
+              <td>
+                <div class="person-actions">
+                  <button
+                    class="person-action"
+                    type="button"
+                    (click)="editPerson($event, person.id)"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="person-action-icon"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                      />
+                    </svg>
+                  </button>
+                  <button
+                    class="person-action"
+                    type="button"
+                    (click)="
+                      deletePerson(
+                        $event,
+                        person.id,
+                        data.currentPage,
+                        data.lastPage,
+                        data.people.length
+                      )
+                    "
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="person-action-icon"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+
+          <tfoot>
+            <tr>
+              <td>
+                <span class="results-summary"
+                  >Showing
+                  <span class="results-summary-num">{{
+                    data.currentIndex
+                  }}</span>
+                  through
+                  <span class="results-summary-num">{{
+                    data.currentIndex + data.people.length - 1
+                  }}</span>
+                  of
+                  <span class="results-summary-num">{{ data.lastIndex }}</span>
+                  result<ng-container *ngIf="data.lastIndex !== 1"
+                    >s</ng-container
+                  ></span
+                >
+              </td>
+              <td colspan="2">
+                <div *ngIf="data.lastPage > 1" class="pagination">
+                  <app-people-list-pagination
+                    [currentPage]="data.currentPage"
+                    [lastPage]="data.lastPage"
+                  ></app-people-list-pagination>
+                </div>
+              </td>
+            </tr>
+          </tfoot>
+        </ng-container>
+        <ng-template #noData>
+          <tbody>
+            <td colspan="3">
+              <p class="fetch-notice">No data found.</p>
+            </td>
+          </tbody>
+        </ng-template>
+      </ng-container>
+      <ng-template #errorOrLoading>
+        <tbody>
+          <td colspan="3">
+            <p class="fetch-notice">
+              <ng-container *ngIf="error; else loading">
+                There was an error while fetching users. Please try again later.
+              </ng-container>
+              <ng-template #loading>Loading...</ng-template>
+            </p>
+          </td>
+        </tbody>
+      </ng-template>
+    </table>
+  </app-card>
+</article>

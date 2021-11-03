@@ -1,0 +1,34 @@
+<article>
+  <app-person-page-header header="Edit a person"></app-person-page-header>
+
+  <app-card>
+    <div class="form-container">
+      <app-person-form
+        *ngIf="person$ | async as person; else errorOrLoading"
+        formId="person-form"
+        [person]="person"
+        (submitPerson)="savePerson(person.id, $event)"
+      ></app-person-form>
+      <ng-template #errorOrLoading>
+        <p class="fetch-notice">
+          <ng-container *ngIf="error === 'loading'; else loading">
+            There was an error while fetching the select user. Please try again
+            later.
+          </ng-container>
+          <ng-template #loading>Loading...</ng-template>
+        </p>
+      </ng-template>
+    </div>
+    <div class="form-actions">
+      <p class="fetch-notice save-notice">
+        <ng-container *ngIf="error === 'saving'">
+          There was an error while saving the form. Please try again later.
+        </ng-container>
+      </p>
+      <button form="person-form" type="submit" [disabled]="submitting">
+        <ng-container *ngIf="submitting; else save">Saving...</ng-container>
+        <ng-template #save>Save</ng-template>
+      </button>
+    </div>
+  </app-card>
+</article>

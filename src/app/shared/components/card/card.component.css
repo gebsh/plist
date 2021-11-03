@@ -1,0 +1,7 @@
+:host {
+  display: block;
+  box-shadow: var(--shadow);
+  border-radius: 6px;
+  background-color: var(--white);
+  overflow-x: auto;
+}

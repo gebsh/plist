@@ -1,0 +1,18 @@
+:host {
+  display: inline-block;
+  block-size: var(--text-base);
+  inline-size: var(--text-base);
+}
+
+.asc-arrow {
+  opacity: 0;
+}
+
+.asc-arrow:hover {
+  opacity: 0.75;
+}
+
+.asc-arrow.active,
+.asc-arrow.active:hover {
+  opacity: 1;
+}

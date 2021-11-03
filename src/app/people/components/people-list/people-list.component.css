@@ -1,0 +1,136 @@
+.people-action-bar {
+  display: flex;
+  flex-direction: column;
+  margin-block-end: var(--space-4);
+}
+
+.people-action-bar > label {
+  margin-block-end: var(--space-1);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--gray-700);
+  line-height: var(--lh-sm);
+}
+
+.people-action-bar-widgets {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  column-gap: var(--space-8);
+}
+
+.people-action-bar-widgets > input {
+  flex: 1 1 320px;
+  inline-size: 100%;
+  max-inline-size: 480px;
+}
+
+table {
+  min-inline-size: 100%;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+thead {
+  background-color: var(--gray-50);
+}
+
+tbody {
+  border-block: 1px solid var(--gray-200);
+  background-color: var(--white);
+}
+
+tbody > tr + tr {
+  border-block-start: 1px solid var(--gray-200);
+}
+
+tfoot {
+  background-color: var(--white);
+}
+
+th {
+  padding-block: var(--space-2);
+  padding-inline: var(--space-6);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--gray-500);
+  line-height: var(--lh-sm);
+  text-align: left;
+  text-transform: uppercase;
+}
+
+td {
+  padding-block: var(--space-4);
+  padding-inline: var(--space-6);
+}
+
+.column-header {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  column-gap: var(--space-1);
+  cursor: default;
+}
+
+.person-row {
+  transition-property: background-color;
+  transition-timing-function: var(--transition-fn);
+  transition-duration: var(--transition-dur);
+  cursor: pointer;
+}
+
+.person-row:hover {
+  background-color: var(--gray-100);
+}
+
+.person-info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.person-name {
+  margin-inline-start: var(--space-4);
+}
+
+.person-actions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  column-gap: var(--space-2);
+}
+
+.person-action {
+  padding: 0;
+  border-radius: 0;
+  transition-property: color;
+  transition-timing-function: var(--transition-fn);
+  transition-duration: var(--transition-dur);
+  background-color: transparent;
+  color: inherit;
+}
+
+.person-action-icon {
+  block-size: var(--text-lg);
+  inline-size: var(--text-lg);
+}
+
+.person-action:hover {
+  color: var(--primary-500);
+}
+
+.pagination {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.results-summary,
+.fetch-notice {
+  font-size: var(--text-sm);
+}
+
+.results-summary-num {
+  font-weight: 500;
+}
